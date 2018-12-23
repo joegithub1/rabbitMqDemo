@@ -1,4 +1,4 @@
-package cn.com.java.ps.direct;
+package cn.com.java.ps.topics;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -14,28 +14,29 @@ import com.rabbitmq.client.AMQP.BasicProperties;
 import cn.com.java.util.ConnectionUtils;
 import cn.com.java.util.QueueNameUtils;
 
-public class Recv1 {
+public class Recv2 {
 
 	public static void main(String[] args) throws IOException, TimeoutException {
-		
 		Connection connection = ConnectionUtils.getConnection();
 		Channel channel = connection.createChannel();
-		channel.exchangeDeclare(QueueNameUtils.EX_COLOR, BuiltinExchangeType.DIRECT);
-		String []severity = {"orange","green","blank"};
-		String queueName = channel.queueDeclare().getQueue();
-		for (String s : severity) {
-			channel.queueBind(queueName, QueueNameUtils.EX_COLOR, s);
-		}
+		channel.exchangeDeclare(QueueNameUtils.EX_TOPICS_NAME, BuiltinExchangeType.TOPIC);
 		
+		String queueName = channel.queueDeclare().getQueue();
+		String [] bindingKeys = {"*.zhang.*"};
+		for (String rk : bindingKeys) {
+			channel.queueBind(queueName, QueueNameUtils.EX_TOPICS_NAME, rk);
+		}
 		Consumer consumer = new DefaultConsumer(channel){
 			@Override
 			public void handleDelivery(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body)
 					throws IOException {
 				String msg = new String(body,"GBK");
-				System.out.println(envelope.getRoutingKey()+" recv msg £º"+msg);
+				System.out.println("recv2 : "+envelope.getRoutingKey()+"£¬msg : "+msg);
 				
-			};
+			}
 		};
+		
 		channel.basicConsume(queueName, true, consumer);
+		
 	}
 }

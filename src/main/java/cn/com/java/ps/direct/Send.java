@@ -10,6 +10,13 @@ import com.rabbitmq.client.Connection;
 import cn.com.java.util.ConnectionUtils;
 import cn.com.java.util.QueueNameUtils;
 
+/**
+* @ClassName: Send
+* @Description: direct方式
+* @author huangjian
+* @date 2018年12月23日
+*
+*/
 public class Send {
 
 	public static void main(String[] args) throws IOException, TimeoutException, InterruptedException {
@@ -22,7 +29,7 @@ public class Send {
 			String msg = "send msg mq [direct] "+i;
 			channel.basicPublish(QueueNameUtils.EX_COLOR,QueueNameUtils.ROUTINGKEY_BLANK, null, msg.getBytes());
 			channel.basicPublish(QueueNameUtils.EX_COLOR,QueueNameUtils.ROUTINGKEY_GREEN, null, msg.getBytes());
-			channel.basicPublish(QueueNameUtils.EX_COLOR,QueueNameUtils.ROUTINGKEY_ORANGE, null, msg.getBytes());
+			//channel.basicPublish(QueueNameUtils.EX_COLOR,QueueNameUtils.ROUTINGKEY_ORANGE, null, msg.getBytes());
 			Thread.sleep(1000);
 		}
 		channel.close();

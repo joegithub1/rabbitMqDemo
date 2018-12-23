@@ -16,4 +16,8 @@ public class QueueNameUtils {
 	public static final String ROUTINGKEY_ORANGE="orange";
 	public static final String ROUTINGKEY_GREEN="green";
 	public static final String ROUTINGKEY_BLANK="blank";
+	
+	public static final String EX_TOPICS_NAME="topics_logs";
+	
+	
 }

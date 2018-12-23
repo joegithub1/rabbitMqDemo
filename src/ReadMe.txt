@@ -6,3 +6,6 @@ fanout:所有队列都发
 direct:根据
 topic:
 channel.exchangeDeclare(exchange, type);
+
+
+https://www.jianshu.com/p/a6460b4b155f
